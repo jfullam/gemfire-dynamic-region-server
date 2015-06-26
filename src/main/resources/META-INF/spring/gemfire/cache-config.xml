@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gfe="http://www.springframework.org/schema/gemfire"
+	xmlns:gfe-data="http://www.springframework.org/schema/data/gemfire"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/gemfire http://www.springframework.org/schema/gemfire/spring-gemfire.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+		http://www.springframework.org/schema/data/gemfire http://www.springframework.org/schema/data/gemfire/spring-data-gemfire.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<context:component-scan base-package="io.pivotal.fe" />
+
+
+	<util:properties id="gemfireProps" location="gemfire.properties">
+		<prop key="name">server#{ (T(java.lang.Math).random() * 1000).intValue()
+			}
+		</prop>
+	</util:properties>
+
+	<gfe:annotation-driven />
+
+
+	<gfe:cache properties-ref="gemfireProps" />
+
+	<gfe:replicated-region id="metadataRegion" name="metadataRegion">
+		<gfe:cache-listener>
+			<bean class="io.pivotal.fe.listener.CreateRegionCacheListener" />
+		</gfe:cache-listener>
+	</gfe:replicated-region>
+
+	<gfe:partitioned-region id="books" copies="1"/>
+
+	<gfe:cache-server port="#{ T(java.lang.Math).random() * 10000 }" />
+
+
+
+</beans>
