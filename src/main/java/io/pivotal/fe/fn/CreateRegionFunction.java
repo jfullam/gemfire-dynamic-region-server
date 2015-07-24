@@ -27,7 +27,7 @@ public class CreateRegionFunction {
 
 	}
 
-	@GemfireFunction
+	@GemfireFunction(id="CreateRegionFunction")
 	public boolean createRegion(String regionName) {
 		
 		RegionAttributes attributes =  new RegionAttributesFactoryBean().create();
@@ -51,6 +51,7 @@ public class CreateRegionFunction {
 	}
 
 	public String getId() {
+		System.out.println(getClass().getSimpleName());
 		return getClass().getSimpleName();
 	}
 
