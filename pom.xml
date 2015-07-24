@@ -12,7 +12,20 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-gemfire</artifactId>
 			<version>1.6.0.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>gemfire</artifactId>
+					<groupId>com.gemstone.gemfire</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.gemstone.gemfire</groupId>
+			<artifactId>gemfire</artifactId>
+			<version>8.1.0</version>
+		</dependency>
+		
 
 	</dependencies>
 
